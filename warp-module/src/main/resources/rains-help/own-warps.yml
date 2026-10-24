@@ -1,0 +1,51 @@
+id: own-warps
+title: Making your own warps
+summary: Set a warp where you stand, share it, charge for it, and what a warp token is for.
+intro: |
+  Your own signpost to your own place. Whether you may make one is up to the server — I shall explain what it asks.
+icon: COMPASS
+category: Getting around
+order: 11
+module: warps
+aliases: [warp-set, setwarp, mywarp, warp-token, token, mine]
+keywords: [create, private, member, fee, rent, label, icon, category, delete, move, owner]
+commands: []
+related: [warps]
+sections:
+  - question: Can I make a warp?
+    title: Who may
+    text: |
+      With the <white>rainswarps.warp.create</white> permission you may set {setting:warps:most-own-warps|count} warps of your own. Without it you cannot — but a <white>warp token</white> lets you set one more, whatever the limit. Staff have no limit. {if:warps:most-own-warps == 0}Right now only tokens and staff make warps.{/if}
+      The server holds at most {setting:warps:most-warps|count} warps in all.
+  - question: How do I set one?
+    title: Setting
+    text: |
+      Stand where it should be and type {cmd:/warp set <name>}. A name has letters, digits, dashes and underscores — at most {setting:warps:longest-name|count} characters, and not a word /warp reads as an instruction (list, set, mine, rent …). Setting a name you already own points it here instead.
+      {cmd:/warp move <name>} moves it here and keeps everything else; {cmd:/warp delete <name>} removes it.
+  - question: Does making a warp cost anything?
+    title: Price
+    when: warps:create-price
+    text: |
+      Yes: {setting:warps:create-price|money}, taken when it is set. Moving or re-making a warp you have is free, and so is one made with a token.
+  - question: Can I make it private?
+    title: Access
+    text: |
+      {cmd:/warp access <name> everybody} for anybody, {cmd:/warp access <name> private} for you and the people you add. {cmd:/warp member add <name> <player>} lets somebody in; {cmd:/warp member remove <name> <player>} takes them out. Staff-only and permission-locked warps are for the staff to hand out.
+  - question: What is /warp mine?
+    title: Your warps
+    text: |
+      {run:/warp mine} is the page of your warps: change who may use one, its look, its category, its fee and its rent without typing. {cmd:/warp label <name> <text>} sets what the menu shows (people still type the name), {cmd:/warp icon <name> <item>} the item, {cmd:/warp category <name> <category>} the shelf.
+  - question: How does a warp token work?
+    title: Tokens
+    text: |
+      A token is a nether star. Right-click it where you want a warp, type a name in chat within a minute, and the token is spent. A taken name or a full server costs nothing — you keep the token.
+  - question: Can I charge visitors?
+    title: Visit fee
+    when: warps:most-visit-fee
+    text: |
+      {cmd:/warp fee <name> <amount>} sets what a visit costs, up to {setting:warps:most-visit-fee|money}; {cmd:/warp fee <name> off} makes it free. The visitor pays and you receive it{if:warps:visit-fee-server-cut-percent > 0}, minus the server's {setting:warps:visit-fee-server-cut-percent|percent}{/if}.
+  - question: Do I pay rent?
+    title: Rent
+    when: warps:rent-per-week
+    text: |
+      Warps made while rent is on cost {setting:warps:rent-per-week|money} a week, the first week included, taken from you when it falls due. {run:/warp rent} shows what you owe; {cmd:/warp rent pay <name>} pays. Unpaid, the warp is closed to everybody but you and staff until you pay. Nothing is ever deleted for it.

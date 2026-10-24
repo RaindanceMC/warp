@@ -1,0 +1,58 @@
+id: warps
+title: Warps
+summary: Named places anybody can be sent to — how to go, what to expect on the way, and which ones you can see.
+intro: |
+  Somebody has to build the places worth visiting, and somebody has to make them easy to reach. A warp is a signpost with a teleporter attached.
+icon: LODESTONE
+category: Getting around
+order: 10
+module: warps
+aliases: [warp, warps, warplist, spawn, travel, go, teleport, fast-travel]
+keywords: [warmup, cooldown, category, claim, home, pets, lead, safe, landing]
+commands: [warp]
+related: [own-warps, teleport-requests]
+sections:
+  - question: How do I go to a warp?
+    title: Going
+    text: |
+      {run:/warp} opens the list; click one. Or type {cmd:/warp <name>} and go straight there. {cmd:/warp list} shows the same as text you can paste to a friend. Warps you may not use are not on your list at all.
+      A warp on another server of the network takes you there.
+  - question: Why do I have to stand still?
+    title: Waiting
+    when: warps:warmup-seconds > 0
+    text: |
+      So running away from a fight through a warp costs something: you stand still for {setting:warps:warmup-seconds|seconds} first. {if:warps:hurt-cancels-warmup}Being hurt cancels it.{else}Being hurt does not cancel it.{/if} If you move, it is called off and you stay where you are.
+  - question: Is there a wait between warps?
+    title: Cooldown
+    when: warps:cooldown-seconds > 0
+    text: |
+      Yes: {setting:warps:cooldown-seconds|seconds} between one warp of yours and the next. It is one wait for all warps — hopping between two of them would otherwise cost nothing. You are told how long is left.
+  - question: What happens when I arrive?
+    title: Landing
+    text: |
+      {if:warps:safe-arrival}The warp looks for solid ground within {setting:warps:safe-arrival-radius|count} blocks of where it was set, so a mined-out floor is not a fall. If nothing safe is nearby you are told and stay put.{else}You land exactly where the warp was set — mind the floor.{/if}
+  - question: What comes with me?
+    title: Pets and leads
+    text: |
+      {if:warps:bring-what-you-lead}A dog on your lead, the boat you tow and whatever rides with you come along.{else}Only you. Anything you lead or ride stays where it was.{/if}
+      {if:warps:bring-nearby-pets}Your own tame animals within {setting:warps:bring-radius|count} blocks come too, up to {setting:warps:bring-at-most|count} at once — what is on a lead first. Never somebody else's animals, never wild mobs, and never another player.{/if}
+  - question: What are the categories?
+    title: Categories
+    when: warps:use-categories
+    text: |
+      Warps are filed under categories — click one on the first page to see its warps. Handy once there are more than a few.
+  - question: Can I warp to a claim?
+    title: Claims and homes
+    when: "@module:claims"
+    text: |
+      {run:/warp claim} lists the warps of players' claims you may go to; {cmd:/warp claim <name>} goes to one (if two claims share a name, you are told how to say whose: owner/name). {cmd:/warp home <player>} takes you to the claim somebody calls home — if they let you. The answer for "no home" and "not allowed" is the same.
+  - question: Why does it cost money to visit?
+    title: Visit fees
+    when: warps:most-visit-fee
+    text: |
+      Owners of player-made warps may charge visitors up to {setting:warps:most-visit-fee|money}. You pay when you set off; if the trip fails, you are refunded. {if:warps:visit-fee-server-cut-percent > 0}The server keeps {setting:warps:visit-fee-server-cut-percent|percent} of it.{/if}
+  - question: Why is a warp closed?
+    title: Closed warps
+    when: warps:rent-per-week
+    text: |
+      A player's warp is closed to everybody but its owner and staff while its rent is unpaid. Nothing is deleted — when the owner pays, it opens again.

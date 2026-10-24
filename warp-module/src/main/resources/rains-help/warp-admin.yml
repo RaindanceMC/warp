@@ -1,0 +1,32 @@
+id: warp-admin
+title: Managing warps
+summary: The admin page, the settings page, handing out tokens and owners, and who a warp is for.
+intro: |
+  With the keys to the kingdom comes a long list of buttons. Here is what they do.
+icon: COMMAND_BLOCK
+category: Staff
+order: 940
+module: warps
+permission: rainswarps.warp.manage
+aliases: [warp-config, warp-settings, warpadmin]
+keywords: [staff, access, owner, token, admin, config, limit]
+commands: []
+related: [warps, own-warps]
+sections:
+  - question: How do I manage every warp?
+    title: The admin page
+    text: |
+      {run:/warp admin} lists every warp there is. {cmd:/warp set <name>}, {cmd:/warp move <name>} and {cmd:/warp delete <name>} work on any warp, with or without the menu; so do category, label, icon and access.
+  - question: Who can a warp be for?
+    title: Access
+    text: |
+      {cmd:/warp access <name> everybody|private|staff|own|<permission>}. Staff means the permission <white>rainswarps.warp.staff</white>; own makes a permission named after the warp (<white>rainswarps.warp.name</white>); anything else is taken as a permission node. Staff with manage can use every warp.
+  - question: How do I give a warp or tokens away?
+    title: Owners and tokens
+    text: |
+      {cmd:/warp owner <name> <player>} makes somebody the owner; they can then change it and pay its rent. {cmd:/warp token <player> [amount]} gives warp tokens (1 to 64).
+  - question: Where are the warp settings?
+    title: Settings
+    text: |
+      {run:/warp config} opens the page; the same settings are in {run:/settings}. Now: wait {setting:warps:warmup-seconds|seconds}, cooldown {setting:warps:cooldown-seconds|seconds}, at most {setting:warps:most-warps|count} warps, names up to {setting:warps:longest-name|count} characters, {setting:warps:most-own-warps|count} own warps per player, categories {setting:warps:use-categories|onoff}.
+      Creating a warp costs {setting:warps:create-price|money}, rent is {setting:warps:rent-per-week|money} a week, visit fees up to {setting:warps:most-visit-fee|money} with the server's cut at {setting:warps:visit-fee-server-cut-percent|percent}. Staff with <white>rainswarps.bypass.fees</white> pay none of it.
