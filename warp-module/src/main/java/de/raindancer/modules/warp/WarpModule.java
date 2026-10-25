@@ -58,7 +58,7 @@ import java.util.List;
  */
 public final class WarpModule implements FlexModule {
 
-    private static final ModuleInfo INFO = ModuleInfo.of("warps", "Warps", "1.10.0")
+    private static final ModuleInfo INFO = ModuleInfo.of("warps", "Warps", "1.11.0")
             .describedAs("Named places anybody can be sent to, with a menu to pick one from — and "
                     + "warps only the staff, or one permission, can reach")
             .by("Raindancer118");
@@ -178,6 +178,18 @@ public final class WarpModule implements FlexModule {
         // when rent is off, which is the default.
         rentSweep = de.raindancer.core.platform.util.Scheduling.globalTimer(context.plugin(),
                 20L * 30, 20L * 60 * 5, task -> rent.sweep());
+
+        // Screens for /screen — Core 2.10.0; on an older Core there are simply none.
+        try {
+            var screens = context.core().screens();
+            if (screens != null) {
+                new de.raindancer.modules.warp.store.WarpScreens(catalogue, rent::isClosed)
+                        .register(screens, context.plugin());
+                context.closeWith(() -> de.raindancer.modules.warp.store.WarpScreens.KINDS.forEach(screens::unregister));
+            }
+        } catch (LinkageError olderCore) {
+            context.log().info("RainsCore is older than 2.10.0: no warp screens until it is updated.");
+        }
 
         // The command was registered during bootstrap, long before any of this existed, and has been
         // answering "not started yet" until now. See WarpCommands.
