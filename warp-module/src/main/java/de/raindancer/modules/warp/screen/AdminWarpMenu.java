@@ -14,7 +14,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -35,8 +34,6 @@ public final class AdminWarpMenu extends PaginatedMenu<Warp> implements IWarpScr
 
     private static final MiniMessage MINI = MiniMessage.miniMessage();
 
-    /** How long an admin has to type a name before the question is dropped. */
-    private static final Duration TO_ANSWER = Duration.ofSeconds(60);
 
     private final WarpServices services;
 
@@ -178,28 +175,25 @@ public final class AdminWarpMenu extends PaginatedMenu<Warp> implements IWarpScr
      * answers — the icon, who it is for — is a chooser, per the module's own grammar.
      */
     private void askForANameAndMakeItHere() {
-        viewer.closeInventory();
-        boolean asking = services.core().prompts().ask(viewer.getUniqueId(), "warps", TO_ANSWER,
+        Money price = services.admin().createPriceFor(viewer);
+        if (price.isPositive()) {
+            services.messages().send(viewer, "warps.create.costs", "price", Fees.format(price));
+        }
+        // In a window, so the player stays in the menus; the window refuses a blank name itself.
+        de.raindancer.core.ui.prompt.AnvilInput.open(viewer, "Name the new warp", "",
+                de.raindancer.core.ui.prompt.Parsers.text(24),
                 answer -> {
                     services.admin().create(viewer, answer);
                     // Reopened so the new warp can be given an icon and an access without typing
                     // anything else. Rebuilt rather than refreshed: the page behind it is gone.
                     new AdminWarpMenu(services, viewer, null, own).open();
                 },
-                // Cancelled or timed out. The line says a warp needs a name, so there is nothing
-                // to fill in — see WarpAdminService.create for why that matters.
-                () -> services.messages().send(viewer, "warps.name.empty"));
-        if (!asking) {
-            // Somebody else is already asking them something. Saying so beats overwriting it,
-            // which would leave the other plugin waiting for an answer it never gets.
-            services.messages().send(viewer, "warps.busy");
-            return;
-        }
-        services.messages().send(viewer, "warps.ask-name");
-        Money price = services.admin().createPriceFor(viewer);
-        if (price.isPositive()) {
-            services.messages().send(viewer, "warps.create.costs", "price", Fees.format(price));
-        }
+                // Closed without a name. The line says a warp needs one, so there is nothing to fill
+                // in — see WarpAdminService.create for why that matters.
+                () -> {
+                    services.messages().send(viewer, "warps.name.empty");
+                    open();
+                });
     }
 
     /** Whether this viewer may set a new warp from here — the node or staff; a token is used by clicking it. */

@@ -234,22 +234,15 @@ public final class WarpConfigMenu extends Menu implements IWarpScreen {
         return Fees.amount(written).isPositive() ? Fees.format(Fees.amount(written)) : "free (0)";
     }
 
-    /** Asks for an amount in chat, which is the one thing a menu cannot enumerate. */
+    /** Asks for an amount in a window — the one thing a menu cannot enumerate — and comes back here. */
     private void askMoney(java.util.function.Consumer<String> withTheAnswer) {
-        viewer.closeInventory();
-        boolean asking = services.core().prompts().ask(viewer.getUniqueId(), "warps",
-                java.time.Duration.ofSeconds(60),
+        de.raindancer.core.ui.prompt.AnvilInput.open(viewer, "Amount: 25, 1.5k, or 0", "",
+                de.raindancer.core.ui.prompt.Parsers.text(16),
                 answer -> {
                     withTheAnswer.accept(answer);
                     open();
                 },
                 this::open);
-        if (!asking) {
-            services.messages().send(viewer, "warps.busy");
-            open();
-            return;
-        }
-        services.messages().send(viewer, "warps.config.ask-money");
     }
 
     // ------------------------------------------------------------------------ the two kinds of button

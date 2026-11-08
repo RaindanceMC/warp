@@ -15,7 +15,6 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,8 +36,6 @@ public final class WarpEditMenu extends Menu implements IWarpScreen {
 
     private static final MiniMessage MINI = MiniMessage.miniMessage();
 
-    /** How long an admin has to answer before the question is dropped. */
-    private static final Duration TO_ANSWER = Duration.ofSeconds(60);
 
     private final WarpServices services;
     private final String name;
@@ -101,7 +98,7 @@ public final class WarpEditMenu extends Menu implements IWarpScreen {
                         refresh();
                         return;
                     }
-                    ask("warps.ask-category",
+                    ask("File it under", warp.category().orElse(""),
                             answer -> services.admin().setCategory(viewer, name, answer));
                 });
 
@@ -119,7 +116,7 @@ public final class WarpEditMenu extends Menu implements IWarpScreen {
                         refresh();
                         return;
                     }
-                    ask("warps.ask-label",
+                    ask("What the menu calls it", warp.label(),
                             answer -> services.admin().setLabel(viewer, name, answer));
                 });
 
@@ -155,7 +152,7 @@ public final class WarpEditMenu extends Menu implements IWarpScreen {
                             "<dark_gray>You never pay for your own warp.",
                             "",
                             "<gray>Click to type a fee, or off to make it free."),
-                    click -> ask("warps.ask-visit-fee",
+                    click -> ask("Visit fee: 5, 1.5k, or off", fee.isPositive() ? Fees.format(fee) : "off",
                             answer -> services.admin().setVisitFee(viewer, name, answer)));
         }
         if (services.rent().isOn() && warp.rentPaidUntil().isPresent()) {
@@ -236,25 +233,18 @@ public final class WarpEditMenu extends Menu implements IWarpScreen {
     }
 
     /**
-     * Asks in chat, and reopens this page with the answer applied.
-     *
-     * <p>A category and a label have nothing to enumerate, so there is no chooser for them — which
-     * is the whole of the module's exception to "never ask for something in chat".
+     * Asks in a window — an anvil whose name field is the answer — and reopens this page with the answer
+     * applied, or without it. A category and a label have nothing to enumerate, so there is no chooser for
+     * them; typing in a window keeps the player in the menus, where typing in chat put them out of them.
      */
-    private void ask(String question, java.util.function.Consumer<String> withTheAnswer) {
-        viewer.closeInventory();
-        boolean asking = services.core().prompts().ask(viewer.getUniqueId(), "warps", TO_ANSWER,
+    private void ask(String title, String start, java.util.function.Consumer<String> withTheAnswer) {
+        de.raindancer.core.ui.prompt.AnvilInput.open(viewer, title, start == null ? "" : start,
+                de.raindancer.core.ui.prompt.Parsers.text(32),
                 answer -> {
                     withTheAnswer.accept(answer);
                     open();
                 },
                 this::open);
-        if (!asking) {
-            services.messages().send(viewer, "warps.busy");
-            open();
-            return;
-        }
-        services.messages().send(viewer, question);
     }
 
     @Override

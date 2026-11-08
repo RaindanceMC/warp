@@ -44,7 +44,6 @@ warps:
   moved: "<green><white><name></white> has moved here. Everything else about it is unchanged."
   deleted: "<green><white><name></white> is gone."
   access-set: "<green><white><name></white>: <white><access></white>."
-  access-empty: "<red>That is not a permission a warp can ask for."
   categorised: "<green><white><name></white> is filed under <white><category></white>."
   uncategorised: "<green><white><name></white> is out of every category."
   labelled: "<green><white><name></white> is shown as <white><label></white>. People still type <white><name></white>."
@@ -56,11 +55,6 @@ warps:
   set-needs-a-player: "<red>A warp is set where somebody is standing, so only a player can do it."
   busy: "<yellow>Something else is already waiting for an answer from you."
 
-  ask-name: "<gray>Type what to call this warp, or <white>cancel</white>."
-  ask-category: "<gray>Type what to file it under, or <white>cancel</white>."
-  ask-label: "<gray>Type what the menu should show for it, or <white>cancel</white>."
-  ask-visit-fee: "<gray>Type what a visit should cost, like <white>5</white> or <white>1.5k</white>, <white>off</white> for free, or <white>cancel</white>."
-  ask-permission: "<gray>Type the permission it should need, or <white>cancel</white>."
 
   # A name is refused for four different reasons and each says which, because "that name will not do"
   # is the answer people try four more spellings against.
@@ -104,7 +98,6 @@ warps:
   config:
     at-the-limit: "<yellow>That is as far as it goes: between <white><least></white> and <white><most></white>."
     refused: "<red><white><setting></white> would not take that value."
-    ask-money: "<gray>Type the new amount, like <white>25</white> or <white>1.5k</white>, <white>0</white> for none, or <white>cancel</white>."
 
   # ---------------------------------------------------------------- usage
   usage:

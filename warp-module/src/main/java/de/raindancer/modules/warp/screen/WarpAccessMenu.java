@@ -11,7 +11,6 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
-import java.time.Duration;
 
 /**
  * Who a warp is for: everybody, the staff, or whoever holds one particular permission.
@@ -30,7 +29,6 @@ public final class WarpAccessMenu extends Menu implements IWarpScreen {
 
     private static final MiniMessage MINI = MiniMessage.miniMessage();
 
-    private static final Duration TO_ANSWER = Duration.ofSeconds(60);
 
     private final WarpServices services;
     private final String name;
@@ -121,24 +119,15 @@ public final class WarpAccessMenu extends Menu implements IWarpScreen {
                 });
     }
 
+    /** In a window, not in chat: the window refuses a blank answer itself, and comes back here either way. */
     private void askForAPermission() {
-        viewer.closeInventory();
-        boolean asking = services.core().prompts().ask(viewer.getUniqueId(), "warps", TO_ANSWER,
+        de.raindancer.core.ui.prompt.AnvilInput.open(viewer, "The permission it needs", "",
+                de.raindancer.core.ui.prompt.Parsers.text(64),
                 answer -> {
-                    if (answer == null || answer.isBlank()) {
-                        services.messages().send(viewer, "warps.access-empty");
-                    } else {
-                        services.admin().setAccess(viewer, name, new WarpAccess.Needing(answer));
-                    }
+                    services.admin().setAccess(viewer, name, new WarpAccess.Needing(answer));
                     open();
                 },
                 this::open);
-        if (!asking) {
-            services.messages().send(viewer, "warps.busy");
-            open();
-            return;
-        }
-        services.messages().send(viewer, "warps.ask-permission");
     }
 
     @Override
