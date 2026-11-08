@@ -91,10 +91,31 @@ public final class WarpListMenu extends PaginatedMenu<Warp> implements IWarpScre
 
     @Override
     protected List<Warp> entries() {
-        return filtered
+        List<Warp> all = filtered
                 ? services.catalogue().inCategory(category, viewer.getUniqueId(), viewer::hasPermission,
                         services.access())
                 : services.catalogue().visibleTo(viewer.getUniqueId(), viewer::hasPermission, services.access());
+        return favourites.arranged(all, pinned(), Warp::name);
+    }
+
+    // ------------------------------------------------------------------ pinned warps
+
+    private static final de.raindancer.modules.warp.rules.FavouriteRule favourites = new de.raindancer.modules.warp.rules.FavouriteRule();
+    /** Kept with the player's switches, so it follows them across the network like those do. */
+    private static final org.bukkit.NamespacedKey PINNED = new org.bukkit.NamespacedKey(
+            de.raindancer.core.ui.profile.PlayerSwitch.NAMESPACE, "warps-pinned");
+
+    private java.util.Set<String> pinned() {
+        return favourites.fromLine(viewer.getPersistentDataContainer().get(PINNED, org.bukkit.persistence.PersistentDataType.STRING));
+    }
+
+    private void togglePinned(Warp warp) {
+        java.util.Set<String> now = favourites.toggled(pinned(), warp.name());
+        if (now.isEmpty()) {
+            viewer.getPersistentDataContainer().remove(PINNED);
+        } else {
+            viewer.getPersistentDataContainer().set(PINNED, org.bukkit.persistence.PersistentDataType.STRING, favourites.asLine(now));
+        }
     }
 
     /**
@@ -132,7 +153,11 @@ public final class WarpListMenu extends PaginatedMenu<Warp> implements IWarpScre
 
     @Override
     protected ItemStack icon(Warp warp) {
+        boolean starred = favourites.isPinned(pinned(), warp.name());
         List<String> lore = new ArrayList<>();
+        if (starred) {
+            lore.add("<gold>★ Pinned to the top");
+        }
         lore.add("<dark_gray>" + warp.world() + " " + warp.coordinates());
         warp.category().ifPresent(filed -> lore.add("<dark_gray>Filed under " + filed));
         if (services.catalogue().accessOf(warp).isRestricted()) {
@@ -157,11 +182,13 @@ public final class WarpListMenu extends PaginatedMenu<Warp> implements IWarpScre
         } else if (!warp.isHere()) {
             lore.add("<aqua>On the server " + warp.server() + ".");
             lore.add("<gray>Click to go there.");
+            lore.add("<gray>Shift click to " + (starred ? "unpin it." : "pin it to the top."));
         } else if (services.config().warmup() > 0) {
             lore.add("<gray>Click to go. Stand still for "
                     + services.config().warmup() + "s.");
         } else {
             lore.add("<gray>Click to go.");
+            lore.add("<gray>Shift click to " + (starred ? "unpin it." : "pin it to the top."));
         }
 
         // A warp whose configured icon is a block and not an item cannot be drawn at all, and one
@@ -176,6 +203,11 @@ public final class WarpListMenu extends PaginatedMenu<Warp> implements IWarpScre
 
     @Override
     protected void onClick(Warp warp, InventoryClickEvent event) {
+        if (event.isShiftClick()) {
+            togglePinned(warp);
+            refresh();
+            return;
+        }
         // Closed first: the teleport can take a few seconds of standing still, and a window open
         // over it is a window the player has to shut before they can be seen to have moved.
         viewer.closeInventory();
