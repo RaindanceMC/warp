@@ -1,4 +1,4 @@
-# Rain's Warps — every line this module says.
+# Rain's Warps: every line this module says.
 #
 # Offered as a *floor*: anything an owner has already written in their own messages.yml wins, and so
 # does a host's bundled wording. See Messages.defineFrom.
@@ -19,7 +19,7 @@ warps:
   world-missing: "<yellow><name></yellow> is in a world that is not loaded right now."
   on-cooldown: "<yellow>You can warp again in <white><time></white>."
   warming-up: "<gray>Off to <white><name></white> in <white><seconds></white>… stand still."
-  arrived: "<green>Here you are: <white><name></white>. Mind the landing."
+  arrived: "<green>Here you are: <white><name></white>."
   already-travelling: "<yellow>You are already on your way somewhere."
   nowhere-safe: "<red>There is nowhere safe to put you at <white><name></white>."
   could-not-check: "<red>The ground at <white><name></white> could not be checked."
@@ -32,9 +32,9 @@ warps:
     hurt: "<yellow>Something hit you, so you are staying put."
 
   # ---------------------------------------------------------------- the list
-  list-empty: "<gray>There are no warps yet. A blank map, waiting for someone."
+  list-empty: "<gray>There are no warps yet."
   list-heading: "<gray><count> warp(s):"
-  list-row: "<dark_gray>  <white><name></white> <dark_gray>— <gray><world> <where> <dark_gray>(<category>)"
+  list-row: "<dark_gray>  <white><name></white><dark_gray>: <gray><world> <where> <dark_gray>(<category>)"
   none-for-you: "<gray>None of this server's warps is for you yet."
   how-to-make-one: "<gray>Stand where you want it and type <white>/warp set <somebody's name for it></white>."
 
@@ -59,7 +59,7 @@ warps:
   # A name is refused for four different reasons and each says which, because "that name will not do"
   # is the answer people try four more spellings against.
   name:
-    empty: "<red>A warp needs a name. 'Unnamed' does not count."
+    empty: "<red>A warp needs a name."
     too-long: "<red>That is too long for a warp: <white><limit></white> characters at most."
     bad-characters: "<red>A warp's name may have letters, digits, dashes and underscores in it, and nothing else."
     reserved: "<red><white><name></white> is a word <white>/warp</white> reads as an instruction, so nothing could ever warp there. Pick another name."
@@ -89,20 +89,20 @@ warps:
     ask-name: "<gray>Type what to call your new warp, or <white>cancel</white>. It goes right where you stand."
     cancelled: "<gray>No warp set. Your token is still yours."
     gone: "<red>There is no warp token in your inventory any more."
-    used: "<green>One warp token spent. Well placed."
+    used: "<green>One warp token used."
     given: "<green>Gave <white><amount></white> warp token(s) to <white><player></white>."
     received: "<green>You got <white><amount></white> warp token(s). Right-click one where you want a warp."
     cannot-make: "<red>The warp token item could not be made. The console says why."
 
   # ---------------------------------------------------------------- the config page
   config:
-    at-the-limit: "<yellow>That is as far as it goes: between <white><least></white> and <white><most></white>."
+    at-the-limit: "<yellow>The value has to be between <white><least></white> and <white><most></white>."
     refused: "<red><white><setting></white> would not take that value."
 
   # ---------------------------------------------------------------- usage
   usage:
     set: "<gray>/warp set <somebody's name for it>"
-    config: "<gray>/warp config <dark_gray>— opens the page; there is nothing to type"
+    config: "<gray>/warp config<dark_gray>: opens the page, there is nothing to type"
     move: "<gray>/warp move <which warp>"
     delete: "<gray>/warp delete <which warp>"
     category: "<gray>/warp category <which warp> [what to file it under]"
@@ -113,7 +113,7 @@ warps:
     member: "<gray>/warp member add|remove <which warp> <which player>"
     token: "<gray>/warp token [who] [how many]"
     fee: "<gray>/warp fee <which warp> <what a visit costs | off>"
-    rent: "<gray>/warp rent <dark_gray>— what your warps owe, or <gray>/warp rent pay <which warp>"
+    rent: "<gray>/warp rent<dark_gray>: what your warps owe, or <gray>/warp rent pay <which warp>"
 
   # ---------------------------------------------------------------- help
   #
@@ -121,11 +121,11 @@ warps:
   # name here" from "<player>" meaning "something forgot to fill this in", so instruction is written
   # out in words.
   help:
-    - "<gray>/warp <dark_gray>— the warps you can go to"
-    - "<gray>/warp somewhere <dark_gray>— straight there"
-    - "<gray>/warp list <dark_gray>— the same list, as text you can paste"
-    - "<gray>/warp claim <dark_gray>— players' claims you may warp into"
-    - "<gray>/warp home somebody <dark_gray>— the claim they call home"
+    - "<gray>/warp<dark_gray>: the warps you can go to"
+    - "<gray>/warp somewhere<dark_gray>: straight there"
+    - "<gray>/warp list<dark_gray>: the same list, as text you can paste"
+    - "<gray>/warp claim<dark_gray>: players' claims you may warp into"
+    - "<gray>/warp home somebody<dark_gray>: the claim they call home"
   # ---------------------------------------------------------------- paying for it
   #
   # Only said when an owner has put a price on something. Every price defaults to nothing.
@@ -158,24 +158,24 @@ warps:
     no-economy: "<red>Rent is paid in money, and there is no economy on this server."
     refused: "<red>The payment was refused, so the warp stays closed."
     paid: "<green>Paid <white><price></white>. <white><name></white> is open again and covered until <white><until></white>."
-    status-open: "<gray><white><name></white> <dark_gray>— covered until <until> (<price> a week)"
-    status-closed: "<red><white><name></white> <dark_gray>— closed, rent unpaid (<price> a week)"
+    status-open: "<gray><white><name></white><dark_gray>: covered until <until> (<price> a week)"
+    status-closed: "<red><white><name></white><dark_gray>: closed, rent unpaid (<price> a week)"
     none: "<gray>None of your warps pays rent. Rent is <white><price></white> a week on warps made while it is on."
 
   help-own:
-    - "<gray>/warp mine <dark_gray>— your own warps, and the page to change them"
-    - "<gray>/warp set somewhere <dark_gray>— a warp of your own, right here"
-    - "<gray>/warp access somewhere private <dark_gray>— only you and the people you add"
-    - "<gray>/warp member add somewhere somebody <dark_gray>— let somebody in"
-    - "<gray>/warp fee somewhere 5 <dark_gray>— charge visitors, where the server allows it"
-    - "<gray>/warp rent <dark_gray>— what your warps owe, where the server charges rent"
+    - "<gray>/warp mine<dark_gray>: your own warps, and the page to change them"
+    - "<gray>/warp set somewhere<dark_gray>: a warp of your own, right here"
+    - "<gray>/warp access somewhere private<dark_gray>: only you and the people you add"
+    - "<gray>/warp member add somewhere somebody<dark_gray>: let somebody in"
+    - "<gray>/warp fee somewhere 5<dark_gray>: charge visitors, where the server allows it"
+    - "<gray>/warp rent<dark_gray>: what your warps owe, where the server charges rent"
   help-admin:
-    - "<gray>/warp admin <dark_gray>— every warp there is, and what can be changed"
-    - "<gray>/warp set, move, delete <dark_gray>— by hand, without the menu"
-    - "<gray>/warp access <dark_gray>— everybody, staff only, its own permission, or one you name"
-    - "<gray>/warp config <dark_gray>— what a warp costs, and what travels with somebody"
-    - "<gray>/warp owner <dark_gray>— give a warp to a player, who can then change it"
-    - "<gray>/warp token <dark_gray>— hand out warp tokens"
+    - "<gray>/warp admin<dark_gray>: every warp there is, and what can be changed"
+    - "<gray>/warp set, move, delete<dark_gray>: by hand, without the menu"
+    - "<gray>/warp access<dark_gray>: everybody, staff only, its own permission, or one you name"
+    - "<gray>/warp config<dark_gray>: what a warp costs, and what travels with somebody"
+    - "<gray>/warp owner<dark_gray>: give a warp to a player, who can then change it"
+    - "<gray>/warp token<dark_gray>: hand out warp tokens"
 
   manual:
     using:
@@ -194,14 +194,14 @@ warps:
       - "<gray>Every click here is written to disk at once, so"
       - "<gray>there is no Apply button to forget."
       - ""
-      - "<dark_gray>The same settings as /settings, which has them"
-      - "<dark_gray>filed under warps — this is the one page about"
-      - "<dark_gray>warps rather than the whole server's tree."
+      - "<dark_gray>The same settings as in /settings, filed"
+      - "<dark_gray>under warps. This page shows only the"
+      - "<dark_gray>warp settings."
       - ""
       - "<dark_gray>What travels with somebody never includes another"
       - "<dark_gray>player, whatever these say. A player moved somewhere"
       - "<dark_gray>they did not ask to go is a teleport nobody agreed"
-      - "<dark_gray>to, and on a PvP server it is a weapon."
+      - "<dark_gray>to, and on a PvP server it can be abused."
     editing:
       - "<gray>Everything about one warp."
       - ""
