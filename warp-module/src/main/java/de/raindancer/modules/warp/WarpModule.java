@@ -59,8 +59,8 @@ import java.util.List;
 public final class WarpModule implements FlexModule {
 
     private static final ModuleInfo INFO = ModuleInfo.of("warps", "Warps", "1.13.0")
-            .describedAs("Named places anybody can be sent to, with a menu to pick one from — and "
-                    + "warps only the staff, or one permission, can reach")
+            .describedAs("Named places anybody can be sent to, with a menu to pick one from. "
+                    + "Some warps only the staff, or holders of one permission, can reach")
             .by("Raindancer118");
 
     private LogChannel log;

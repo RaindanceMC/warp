@@ -67,8 +67,8 @@ public final class WarpConfigMenu extends Menu implements IWarpScreen {
                 now.bringWhatYouLead(), "bring-what-you-lead",
                 "<gray>A dog on your lead, the boat you are towing,",
                 "<gray>and whoever is riding with you.",
-                "<dark_gray>Never another player, whatever this says —",
-                "<dark_gray>a player moved somewhere they did not ask to",
+                "<dark_gray>Never another player, whatever this says.",
+                "<dark_gray>A player moved somewhere they did not ask to",
                 "<dark_gray>go is a teleport nobody agreed to.");
 
         // Greyed rather than hidden when leads are off: which of them is set is exactly what somebody
@@ -82,8 +82,8 @@ public final class WarpConfigMenu extends Menu implements IWarpScreen {
                                 "<gray>ones not on a lead. Costs a look around the",
                                 "<gray>player on every warp.",
                                 "<dark_gray>Never somebody else's animals, and never a",
-                                "<dark_gray>wild mob — a warp taken at a mob farm would",
-                                "<dark_gray>otherwise arrive with the mob farm.")),
+                                "<dark_gray>wild mob. A warp taken at a mob farm would",
+                                "<dark_gray>otherwise bring the whole farm.")),
                 "Nothing travels with anybody while leads are switched off",
                 click -> cycle("bring-nearby-pets"));
 
@@ -114,7 +114,7 @@ public final class WarpConfigMenu extends Menu implements IWarpScreen {
         band(MenuLayout.RULES, 1, Icons.of(Material.CLOCK, "<white>Stand still for",
                         lore(now.warmup() + " seconds",
                                 "<gray>Before a warp takes somebody, so that running",
-                                "<gray>out of a fight through a warp costs something.",
+                                "<gray>out of a fight through a warp is harder.",
                                 "<dark_gray>Zero sends them at once.",
                                 "",
                                 "<gray>Click to add one. Right click to take one away.")),
@@ -137,7 +137,7 @@ public final class WarpConfigMenu extends Menu implements IWarpScreen {
                 "<gray>somebody is standing still for.",
                 "<dark_gray>Worth thinking about with the wait above: mobs",
                 "<dark_gray>at spawn and five seconds is a warp nobody can",
-                "<dark_gray>finish, which gets reported as 'warps are broken'.");
+                "<dark_gray>finish, and players report it as broken.");
 
         toggle(MenuLayout.RULES, 7, Material.FEATHER, "Look for somewhere safe to land",
                 now.safeArrival(), "safe-arrival",
@@ -163,8 +163,8 @@ public final class WarpConfigMenu extends Menu implements IWarpScreen {
         toggle(MenuLayout.LAND, 3, Material.BOOKSHELF, "Group warps into categories",
                 now.useCategories(), "use-categories",
                 "<gray>Whether the warp menu offers the categories page.",
-                "<dark_gray>Off, every warp is on one list — right for a",
-                "<dark_gray>server with eight and unusable with eighty.");
+                "<dark_gray>Off, every warp is on one list. That suits a",
+                "<dark_gray>small server, not one with many warps.");
 
         band(MenuLayout.LAND, 5, Icons.of(Material.CHEST, "<white>Warps this server may have",
                         lore(String.valueOf(now.warpLimit()),
@@ -180,7 +180,7 @@ public final class WarpConfigMenu extends Menu implements IWarpScreen {
                                 "<gray>menu it appears in, and the button that opens",
                                 "<gray>it is what people look for.",
                                 "<dark_gray>Lowering it does not rename the warps that are",
-                                "<dark_gray>already longer — it only refuses new ones.",
+                                "<dark_gray>already longer. It only refuses new ones.",
                                 "",
                                 "<gray>Click to add one. Right click to take one away.")),
                 click -> step("longest-name", now.longestName(), click, 3, 48));

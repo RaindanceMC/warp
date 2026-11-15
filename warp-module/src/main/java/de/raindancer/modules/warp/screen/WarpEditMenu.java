@@ -137,7 +137,7 @@ public final class WarpEditMenu extends Menu implements IWarpScreen {
                         "<gray>" + warp.members().size() + " besides its owner.",
                         "",
                         "<gray>Click to add or remove people."),
-                "Only a private warp has a list — anybody may use this one",
+                "Only a private warp has a list. Anybody may use this one",
                 click -> new WarpMembersMenu(services, viewer, this, name).open());
 
         Money cap = services.visits().cap();
@@ -162,7 +162,7 @@ public final class WarpEditMenu extends Menu implements IWarpScreen {
                             "<red>Unpaid, so the warp is closed to everybody else.",
                             "",
                             "<gray>Click to pay it and open the warp again."),
-                    "Paid until " + services.rent().paidUntilText(warp) + " — nothing to pay yet",
+                    "Paid until " + services.rent().paidUntilText(warp) + ", nothing to pay yet",
                     click -> new ConfirmScreen(services, viewer, this,
                             "<dark_gray>Pay the rent for " + warp.label() + "?",
                             List.of("<gray>Takes <white>" + services.rent().describeRent() + "<gray> now",
@@ -193,7 +193,7 @@ public final class WarpEditMenu extends Menu implements IWarpScreen {
                         "",
                         "<gray>Puts it where you are standing, facing",
                         "<gray>the way you are. Keeps everything else",
-                        "<gray>about it — who it is for included."),
+                        "<gray>about it, including who it is for."),
                 click -> {
                     services.admin().move(viewer, name);
                     refresh();

@@ -28,13 +28,13 @@ public record WarpSettings(
 
         @In("warps/travelling") @Title("Stand still for") @Range(min = 0, max = 60)
         @Describe("Seconds somebody must stand still before a warp takes them, so that running "
-                + "away from a fight through a warp costs something. Zero sends them at once.")
+                + "away from a fight through a warp makes it harder. Zero sends them at once.")
         @Key("warmup-seconds")
         int warmupSeconds,
 
         @In("warps/travelling") @Title("Wait between warps") @Range(min = 0, max = 3600)
         @Describe("Seconds between one player's warps. One wait for all warps rather than one per "
-                + "warp: a wait per warp means hopping between two of them costs nothing at all, "
+                + "warp: with a wait per warp, hopping between two of them would cost nothing, "
                 + "which is the same as having none. Zero switches it off.")
         @Key("cooldown-seconds")
         int cooldownSeconds,
@@ -42,8 +42,8 @@ public record WarpSettings(
         @In("warps/travelling") @Title("Being hurt cancels the wait")
         @Describe("Whether taking damage gives up on a warp somebody is standing still for. Worth "
                 + "thinking about together with the wait above: mobs at spawn and a five-second "
-                + "wait is a warp nobody can complete, and that gets reported as 'warping is "
-                + "broken'.")
+                + "wait is a warp nobody can complete, and players "
+                + "report it as broken.")
         @Key("hurt-cancels-warmup")
         boolean hurtCancelsWarmup,
 
@@ -82,8 +82,8 @@ public record WarpSettings(
         @In("warps/travelling") @Title("Bring your animals standing nearby")
         @Describe("Whether your own tame animals come along as well, even the ones not on a lead. "
                 + "Friendlier, and it costs a search around the player on every warp. Never brings "
-                + "somebody else's animals, and never brings a wild mob — a warp taken at a mob "
-                + "farm would arrive with the mob farm.")
+                + "somebody else's animals, and never brings a wild mob, so a warp taken at a mob "
+                + "farm does not bring the farm along.")
         @Key("bring-nearby-pets")
         boolean bringNearbyPets,
 
@@ -95,14 +95,13 @@ public record WarpSettings(
 
         @In("warps/travelling") @Title("Most that may come at once") @Range(min = 1, max = 20)
         @Describe("A ceiling on how many animals travel with one player. A hundred entities "
-                + "teleported at once is a pause for everybody on the server, and somebody will "
-                + "try it. What is on a lead is brought first when this bites.")
+                + "teleported at once is a pause for everybody on the server. What is on a lead is brought first when this bites.")
         @Key("bring-at-most")
         int bringAtMost,
 
         @In("warps/making") @Title("Group warps into categories")
         @Describe("Whether the warp menu offers the categories page. Off, every warp is on one "
-                + "list — which is right for a server with eight of them and unusable with eighty.")
+                + "list, which suits a small server but not one with many warps.")
         @Key("use-categories")
         boolean useCategories,
 

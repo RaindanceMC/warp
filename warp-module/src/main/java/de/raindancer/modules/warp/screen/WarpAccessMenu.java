@@ -85,8 +85,8 @@ public final class WarpAccessMenu extends Menu implements IWarpScreen {
         WarpAccess ownNode = new WarpAccess.Needing(WarpAccess.ownPermissionFor(warp.name()));
         option(6, Material.NAME_TAG, "Its own permission", now, ownNode,
                 "<gray>Needs " + ownNode.permission().orElseThrow() + ".",
-                "<dark_gray>For a group that is not the staff — builders",
-                "<dark_gray>who may reach the build world, say.");
+                "<dark_gray>For a group that is not the staff, for example",
+                "<dark_gray>builders who may reach the build world.");
 
         // The one that has to be typed: an arbitrary node has nothing to enumerate, which is the
         // module's only reason for ever asking in chat.

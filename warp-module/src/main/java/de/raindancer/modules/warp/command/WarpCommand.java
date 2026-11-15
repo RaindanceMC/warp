@@ -141,7 +141,7 @@ public final class WarpCommand implements IWarpCommand {
                     "name", warp.label(),
                     "world", warp.world(),
                     "where", warp.coordinates(),
-                    "category", warp.category().orElse("—"));
+                    "category", warp.category().orElse("none"));
         }
     }
 

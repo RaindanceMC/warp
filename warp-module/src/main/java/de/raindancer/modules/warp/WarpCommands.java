@@ -38,10 +38,10 @@ public final class WarpCommands {
                                 new de.raindancer.modules.warp.command.WarpCommand(
                                         WarpCommands::require))
                         .aliased("warps", "warplist")
-                        .taking("<name> — go there",
-                                "list — every warp you may use",
-                                "set <name> — a warp where you stand",
-                                "delete <name> — take one away")
+                        .taking("<name>: go there",
+                                "list: every warp you may use",
+                                "set <name>: a warp where you stand",
+                                "delete <name>: take one away")
                         .needing("rainswarps.warp.use"));
     }
 
