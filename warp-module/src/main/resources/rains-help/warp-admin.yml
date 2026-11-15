@@ -1,8 +1,8 @@
 id: warp-admin
 title: Managing warps
-summary: The admin page, the settings page, handing out tokens and owners, and who a warp is for.
+summary: "The admin page, the settings page, handing out tokens and owners, and who a warp is for."
 intro: |
-  With the keys to the kingdom comes a long list of buttons. Here is what they do.
+  Staff commands and pages for managing warps, tokens and owners.
 icon: COMMAND_BLOCK
 category: Staff
 order: 940
