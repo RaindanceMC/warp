@@ -57,6 +57,8 @@ class WarpSettingsTest {
             assertThat(defaults.rentPerWeek()).isEqualTo("0");
             assertThat(defaults.mostVisitFee()).isEqualTo("0");
             assertThat(defaults.visitFeeServerCutPercent()).isZero();
+            assertThat(defaults.primeToken()).as("a warp token for each new Prime").isTrue();
+            assertThat(defaults.withPrimeToken(false).primeToken()).isFalse();
         }
 
         @Test

@@ -15,7 +15,7 @@ sections:
   - question: Can I make a warp?
     title: Who may
     text: |
-      With the <white>rainswarps.warp.create</white> permission you may set {setting:warps:most-own-warps|count} warps of your own. Without it you cannot, but a <white>warp token</white> lets you set one more, whatever the limit. Staff have no limit. {if:warps:most-own-warps == 0}Only tokens and staff make warps.{/if}
+      With the <white>rainswarps.warp.create</white> permission you may set {setting:warps:most-own-warps|count} warps of your own. Without it you cannot, but a <white>warp token</white> lets you set one more, whatever the limit. Staff have no limit. {if:warps:most-own-warps == 0}Only tokens and staff make warps.{/if}{if:warps:prime-token} Prime members get a warp token when they join Prime.{/if}
       The server holds at most {setting:warps:most-warps|count} warps in all.
   - question: How do I set one?
     title: Setting

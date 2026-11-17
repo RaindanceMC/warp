@@ -195,6 +195,13 @@ public final class WarpConfigMenu extends Menu implements IWarpScreen {
                                 "<gray>Click to add one. Right click to take one away.")),
                 click -> step("most-own-warps", now.mostOwnWarps(), click, 0, 100));
 
+        toggle(MenuLayout.TOOLBAR_ROW, 6, Material.AMETHYST_CLUSTER, "A warp token for every new Prime",
+                now.primeToken(), "prime-token",
+                "<gray>Somebody who becomes Prime gets one warp",
+                "<gray>token the next time they are on.",
+                "<dark_gray>A renewal gives none; Prime again after",
+                "<dark_gray>it ran out gives another.");
+
         // ------------------------------------------------------------ what it all costs
         toolbar(1, Icons.of(Material.GOLD_NUGGET, "<white>Price of making a warp",
                         lore(moneyText(now.createPrice()),

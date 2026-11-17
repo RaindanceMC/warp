@@ -93,6 +93,7 @@ warps:
     given: "<green>Gave <white><amount></white> warp token(s) to <white><player></white>."
     received: "<green>You got <white><amount></white> warp token(s). Right-click one where you want a warp."
     cannot-make: "<red>The warp token item could not be made. The console says why."
+    prime: "<gradient:#FFE29A:#FF9BD5:#9AD8FF>Thank you for Prime!</gradient> <gray>Here is a <white>warp token</white>: right-click it where you want a warp of your own, free."
 
   # ---------------------------------------------------------------- the config page
   config:

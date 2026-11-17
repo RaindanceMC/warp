@@ -24,7 +24,7 @@ sections:
   - question: How do I give a warp or tokens away?
     title: Owners and tokens
     text: |
-      {cmd:/warp owner <name> <player>} makes somebody the owner; they can then change it and pay its rent. {cmd:/warp token <player> [amount]} gives warp tokens (1 to 64).
+      {cmd:/warp owner <name> <player>} makes somebody the owner; they can then change it and pay its rent. {cmd:/warp token <player> [amount]} gives warp tokens (1 to 64). {if:warps:prime-token}Every new Prime member gets one by themselves; a renewal gives none.{/if}
   - question: Where are the warp settings?
     title: Settings
     text: |

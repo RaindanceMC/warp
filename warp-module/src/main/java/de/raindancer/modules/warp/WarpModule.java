@@ -58,7 +58,7 @@ import java.util.List;
  */
 public final class WarpModule implements FlexModule {
 
-    private static final ModuleInfo INFO = ModuleInfo.of("warps", "Warps", "1.14.0")
+    private static final ModuleInfo INFO = ModuleInfo.of("warps", "Warps", "1.15.0")
             .describedAs("Named places anybody can be sent to, with a menu to pick one from. "
                     + "Some warps only the staff, or holders of one permission, can reach")
             .by("Raindancer118");
@@ -137,6 +137,9 @@ public final class WarpModule implements FlexModule {
                 context.core().messages());
         tokens.register(context.core().items(), context.core().itemAbilities(), server,
                 context.core().prompts());
+        tokens.settings(settings.current());
+        WarpPack.contribute(context.plugin(), context.core(), log);
+        context.closeWith(() -> WarpPack.withdraw(context.core()));
 
         // The cooldown lives on this module's WarpRegistry, so it has to be pushed in at start as
         // well as on reload — otherwise the file says thirty seconds and nothing is enforced until
@@ -160,6 +163,7 @@ public final class WarpModule implements FlexModule {
             admin.settings(fresh);
             visits.settings(fresh);
             rent.settings(fresh);
+            tokens.settings(fresh);
             // Pushed here too, not only at startup — otherwise a changed cooldown reads correctly in
             // every screen and command but goes on enforcing whatever the file said when the module
             // started, until the next restart.
@@ -171,6 +175,17 @@ public final class WarpModule implements FlexModule {
         // mobs at spawn and a five-second warm-up otherwise has a warp nobody can complete.
         context.listener(new TravelListener(travel, settings.current().hurtCancelsWarmup()));
         context.listener(new WarpSessionListener(services));
+        context.listener(new de.raindancer.modules.warp.listener.PrimeTokenListener(services));
+        // Somebody who buys Prime while online is not joining: a look once a minute finds them.
+        var primeCheck = de.raindancer.core.platform.util.Scheduling.globalTimer(context.plugin(), 1200, 1200, task -> {
+            for (org.bukkit.entity.Player online : server.getOnlinePlayers()) {
+                de.raindancer.core.platform.util.Scheduling.entity(context.plugin(), online,
+                        () -> tokens.primeCheck(online));
+            }
+        });
+        if (primeCheck != null) {
+            context.closeWith(primeCheck::cancel);
+        }
 
         // Rent falls due at a time of day, not at a click, so something has to look. Cheap and silent
         // when rent is off, which is the default.

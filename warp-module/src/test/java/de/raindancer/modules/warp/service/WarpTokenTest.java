@@ -121,4 +121,20 @@ class WarpTokenTest {
         assertThat(item.name()).contains("Warp Token");
         assertThat(item.abilityInFull()).contains(WarpTokens.KEY);
     }
+
+    @Test
+    @DisplayName("the token wears its own model from the warps pack")
+    void itsModel() {
+        assertThat(WarpTokens.definition().itemModel()).contains(WarpTokens.MODEL);
+    }
+
+    @Test
+    @DisplayName("a token stored before it had a model gets ours; one an owner gave a model of their own keeps it")
+    void upgradedModel() {
+        CustomItem old = WarpTokens.definition().withTag(CustomItem.TAG_ITEM_MODEL, null);
+        assertThat(WarpTokens.withOurModel(old).itemModel()).contains(WarpTokens.MODEL);
+
+        CustomItem owners = WarpTokens.definition().withTag(CustomItem.TAG_ITEM_MODEL, "myserver:star");
+        assertThat(WarpTokens.withOurModel(owners)).isSameAs(owners);
+    }
 }
