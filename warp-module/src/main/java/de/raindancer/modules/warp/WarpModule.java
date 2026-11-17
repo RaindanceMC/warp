@@ -58,7 +58,7 @@ import java.util.List;
  */
 public final class WarpModule implements FlexModule {
 
-    private static final ModuleInfo INFO = ModuleInfo.of("warps", "Warps", "1.13.1")
+    private static final ModuleInfo INFO = ModuleInfo.of("warps", "Warps", "1.14.0")
             .describedAs("Named places anybody can be sent to, with a menu to pick one from. "
                     + "Some warps only the staff, or holders of one permission, can reach")
             .by("Raindancer118");
@@ -187,6 +187,17 @@ public final class WarpModule implements FlexModule {
             }
         } catch (LinkageError olderCore) {
             context.log().info("RainsCore is older than 2.10.0: no warp screens until it is updated.");
+        }
+
+        // Warps are a door on /travel (Core 2.103.0).
+        try {
+            var door = de.raindancer.core.ui.travel.TravelDoor.of("warp:warps", 20, "Warps", "Places set up for everyone.",
+                            (player, parent) -> new WarpListMenu(services, player, parent).open())
+                    .needing(PermissionNodes.USE);
+            de.raindancer.core.ui.travel.TravelDoors.offer(context.plugin(), door);
+            context.closeWith(() -> de.raindancer.core.ui.travel.TravelDoors.withdraw(door));
+        } catch (LinkageError olderCore) {
+            log.info("RainsCore is older than 2.103.0: warps are not on /travel.");
         }
 
         // The command was registered during bootstrap, long before any of this existed, and has been
